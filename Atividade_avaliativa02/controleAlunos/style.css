@@ -1,0 +1,127 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    align-items: flex-start;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    overflow-y: hidden;
+}
+
+
+main {
+    display: flex;
+    gap: 100px;
+
+}
+
+
+#form {
+    display: flex;
+    align-items: center;
+    width: 420px;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    margin-top: 25px;
+    margin-left: 35px;
+    border: 1px solid black;
+    border-radius: 10px;
+    box-shadow: 2px 2px 9px rgba(0, 0, 0, 0.344);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+#form input {
+    padding: 3px;
+    border-radius: 5px;
+    width: 300px;
+    border: 1px solid black;
+}
+
+
+#resultado {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 30px;
+    align-items: center;
+    width: 100%;
+    max-width: 1290px;
+    padding: 20px;
+    padding-bottom: 20px; 
+    margin-right: 25px;  
+    font-size: 1.0em;
+    padding: 10px;
+    margin-top: 25px;
+    
+}
+
+#text {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.2em;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0, 0, 0, 0.5);
+
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    text-align: center;
+}
+
+#fechar {
+    float: right;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+#cadastrar {
+    padding: 5px;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.589);
+    border-radius: 5px;
+}
+
+#cadastrar:hover {
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+}
+
+.buttons {
+    display: flex;
+    gap: 8px;
+    height: 30px;
+    margin-top: 5px;
+}
+
+.buttonApagar, #descricao {
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.589);
+    cursor: pointer;
+    padding: 2px;
+}
+
+.buttonApagar:hover, #descricao:hover {
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+}
