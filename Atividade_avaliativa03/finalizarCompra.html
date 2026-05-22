@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/style.css">
+    <title>Compra Finalizada</title>
+</head>
+<body>
+    <div class="compraFinalizada">
+        <h1>Compra Finalizada</h1>
+        <p>Obrigado por sua compra!</p>
+        <a href="index.html"><input type="submit" value="Nova Compra" class="btnVoltar" id="btnVoltar"></a>
+    </div>
+    <script>
+        localStorage.setItem("carrinho", JSON.stringify([]));
+    </script>
+</body>
+</html>

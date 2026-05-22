@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/style.css">
+    <title>Loja Virtual</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <hr>
+                <div class="topo">
+                    <div class="cabecalho">
+                        <a href="index.html">
+                            <img src="midias/icones/store.png">
+                            <h1>Loja Virtual</h1>
+                        </a>
+                    </div>
+                    <div class="cabecalho02">
+                        <a href="index.html">
+                            <h1>Produtos</h1>
+                        </a>
+                        <a href="carrinho.html">
+                            <img src="midias/icones/shopping-cart.png" alt="">
+                            <h1>Carrinho</h1>
+                            <h1 id="texto"></h1>
+                        </a>
+                    </div>
+                </div>
+            <hr>
+        </header>
+        <div class="subTitulo">
+            <div class="subTituloTxt">
+                <h1 class="nossos">Nossos Produtos</h1>
+                <p class="garantia">Todos produtos com garantia de 1 ano.</p>
+            </div>
+            <div class="filtros">
+                <form action="" id="formFiltro">
+                        <select name="" class="categoria">
+                            <option value="todos">Todos</option>
+                            <option value="acima50">Acima de R$ 50,00</option>
+                            <option value="abaixo50">Até R$ 50,00</option>
+                    </select>
+                    
+                    <input type="submit" value="Filtrar" class="btnFiltrar" id="btnFiltro">
+                </form>
+            </div>
+        </div>
+        <div class="subContainer">
+            <div class="produtos">
+                <div class="produto" id="primeiro" data-nome="Iphone X" data-descricao="Um celular moderno com cameras excelentes." data-valor="3000" data-imagem="midias/imagens/celular.jpeg">
+                    <img src="midias/imagens/celular.jpeg" alt="">
+                    <h1>Iphone X</h1>
+                    <h3>Um celular moderno com cameras excelentes.</h3>
+                    <h2 class="precosProdutos">R$ 3.000,00</h2>
+                    <div class="botoes">
+                        <input type="submit" value="Adicionar" class="btnAdicionar" id="btnAdicionar01">
+                        <input type="submit" value="Comprar" class="btnComprar" id="btnComprar01">
+                    </div>
+                </div>
+                <div class="produto" id="segundo" data-nome="Relógio" data-descricao="Um relógio moderno e elegante. Com ótimo desempenho." data-valor="1500" data-imagem="midias/imagens/relogio.jpeg">
+                    <img src="midias/imagens/relogio.jpeg" alt="">
+                    <h1>Relógio</h1>
+                    <h3>Um relógio moderno e elegante. Com ótimo desempenho.</h3>
+                    <h2 class="precosProdutos">R$ 1.500,00</h2>
+                    <div class="botoes">
+                        <input type="submit" value="Adicionar" class="btnAdicionar" id="btnAdicionar02">
+                        <input type="submit" value="Comprar" class="btnComprar" id="btnComprar02">
+                    </div>
+                </div>
+                <div class="produto" id="terceiro" data-nome="Mouse" data-descricao="Um mouse moderno e barato. Com ótima performance." data-valor="99.90" data-imagem="midias/imagens/mouse.jpeg">
+                    <img src="midias/imagens/mouse.jpeg" alt="">
+                    <h1>Mouse</h1>
+                    <h3>Um mouse moderno e barato. Com ótima performance.</h3>
+                    <h2 class="precosProdutos">R$ 99,90</h2>
+                    <div class="botoes">
+                        <input type="submit" value="Adicionar" class="btnAdicionar" id="btnAdicionar03">
+                        <input type="submit" value="Comprar" class="btnComprar" id="btnComprar03">
+                    </div>
+                </div>
+                <div class="produto" id="quarto" data-nome="Fone de Ouvido" data-descricao="Um fone de ouvido com ótima qualidade auditiva." data-valor="359.90" data-imagem="midias/imagens/fone.jpeg">
+                    <img src="midias/imagens/fone.jpeg" alt="">
+                    <h1>Fone de Ouvido</h1>
+                    <h3>Um fone de ouvido com ótima qualidade auditiva.</h3>
+                    <h2 class="precosProdutos">R$ 359,90</h2>
+                    <div class="botoes">
+                        <input type="submit" value="Adicionar" class="btnAdicionar" id="btnAdicionar04">
+                        <input type="submit" value="Comprar" class="btnComprar" id="btnComprar04">
+                    </div>
+                </div>
+                <div class="produto" id="quinto" data-nome="Notebook" data-descricao="Um notebook moderno e potente. Com ótimo desempenho." data-valor="5000" data-imagem="midias/imagens/notebook.jpeg">
+                    <img src="midias/imagens/notebook.jpeg" alt="">
+                    <h1>Notebook</h1>
+                    <h3>Um notebook moderno e potente. Com ótimo desempenho.</h3>
+                    <h2 class="precosProdutos">R$ 5.000,00</h2>
+                    <div class="botoes">
+                        <input type="submit" value="Adicionar" class="btnAdicionar" id="btnAdicionar05">
+                        <input type="submit" value="Comprar" class="btnComprar" id="btnComprar05">
+                    </div>
+                </div>
+                <div class="produto" id="sexto" data-nome="Tablet" data-descricao="Um tablet potente. Com um ótimo desempenho." data-valor="2500" data-imagem="midias/imagens/tablet.jpeg">
+                    <img src="midias/imagens/tablet.jpeg" alt="">
+                    <h1>Tablet</h1>
+                    <h3>Um tablet potente. Com um ótimo desempenho.</h3>
+                    <h2 class="precosProdutos">R$ 2.500,00</h2>
+                    <div class="botoes">
+                        <input type="submit" value="Adicionar" class="btnAdicionar" id="btnAdicionar06">
+                        <input type="submit" value="Comprar" class="btnComprar" id="btnComprar06">
+                    </div>
+                </div>
+                <div class="produto" id="setimo" data-nome="Teclado" data-descricao="Um teclado moderno e confortável. Com ótima qualidade." data-valor="199.90" data-imagem="midias/imagens/teclado.jpeg">
+                    <img src="midias/imagens/teclado.jpeg" alt="">
+                    <h1>Teclado</h1>
+                    <h3>Um teclado moderno e confortável. Com ótima qualidade.</h3>
+                    <h2 class="precosProdutos">R$ 199,90</h2>
+                    <div class="botoes">
+                        <input type="submit" value="Adicionar" class="btnAdicionar" id="btnAdicionar07">
+                        <input type="submit" value="Comprar" class="btnComprar" id="btnComprar07">
+                    </div>
+                </div>
+                <div class="produto" id="oitavo" data-nome="Camera" data-descricao="Uma camera retrô. Com ótima qualidade." data-valor="1500" data-imagem="midias/imagens/camera.jpeg">
+                    <img src="midias/imagens/camera.jpeg" alt="">
+                    <h1>Camera</h1>
+                    <h3>Uma camera retrô. Com ótima qualidade.</h3>
+                    <h2 class="precosProdutos">R$ 1.500,00</h2>
+                    <div class="botoes">
+                        <input type="submit" value="Adicionar" class="btnAdicionar" id="btnAdicionar08">
+                        <input type="submit" value="Comprar" class="btnComprar" id="btnComprar08">
+                    </div>
+                </div>
+                <div class="produto" id="nono" data-nome="Despertador" data-descricao="Um ótimo despertador, simples e funcional." data-valor="39.90" data-imagem="midias/imagens/despertador.avif">
+                    <img src="midias/imagens/despertador.avif" alt="">
+                    <h1>Despertador</h1>
+                    <h3>Um ótimo despertador, simples e funcional.</h3>
+                    <h2 class="precosProdutos">R$ 39,90</h2>
+                    <div class="botoes">
+                        <input type="submit" value="Adicionar" class="btnAdicionar" id="btnAdicionar09">
+                        <input type="submit" value="Comprar" class="btnComprar" id="btnComprar09">
+                    </div>
+                </div>
+                <div class="produto" id="decimo" data-nome="Monitor" data-descricao="Um monitor 144Hz, ótimo para o dia a dia." data-valor="1000" data-imagem="midias/imagens/monitor.avif">
+                    <img src="midias/imagens/monitor.avif" alt="">
+                    <h1>Monitor</h1>
+                    <h3>Um monitor 144Hz, ótimo para o dia a dia.</h3>
+                    <h2 class="precosProdutos">R$ 1.000,00</h2>
+                    <div class="botoes">
+                        <input type="submit" value="Adicionar" class="btnAdicionar" id="btnAdicionar10">
+                        <input type="submit" value="Comprar" class="btnComprar" id="btnComprar10">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script/script.js"></script>
+</body>
+</html>
