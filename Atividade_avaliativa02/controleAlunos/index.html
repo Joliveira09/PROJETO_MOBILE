@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Controle de Alunos</title>
+</head>
+
+<body>
+    <main>
+        <article>
+            <form id="form">
+                <label>Nome do Aluno:
+                    <input type="text" id="nomeAluno" required pattern="[A-Za-z\s]+">
+                </label>
+                <label>Idade do Aluno:
+                    <input type="number" id="idadeAluno" required>
+                </label>
+                <label>Nota do Aluno:
+                    <input type="number" id="notaAluno" min="0" max="10" step="0.1" required>
+                </label>
+                <label>
+                    <button type="submit" id="cadastrar">Cadastrar</button>
+                </label>
+            </form>
+        </article>
+        <section class="result">
+            <div id="resultado">
+                <p id="text"></p>
+            </div>
+            <div id="modalDescricao" class="modal">
+                <div class="modal-content">
+                    <span id="fechar">&times;</span>
+                    <div id="conteudoDescricao">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="controleAlunos.js"></script>
+</body>
+
+</html>
