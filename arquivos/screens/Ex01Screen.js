@@ -1,58 +1,75 @@
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, Pressable } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 
-// Importando a imagem local corrigida
 import logo from '../assets/adaptive-icon.png';
 
 export default function Ex01Screen() {
     return (
         <SafeAreaProvider>
             <SafeAreaView style={styles.container}>
-                
-                {/* BLOCO SUPERIOR (Vermelho) */}
+
+                {/* Parte superior */}
                 <View style={styles.box1}>
-                    {/* Imagem 1: No bloco vermelho */}
-                    <Image
-                        style={styles.fullImage}
-                        resizeMode = 'cover'
-                        source={logo} 
-                    />
+                    <Pressable
+                        style={{ flex: 1 }}
+                        onPress={() => alert('Imagem Vermelha')}
+                    >
+                        <Image
+                            style={styles.fullImage}
+                            resizeMode="cover"
+                            source={logo}
+                        />
+                    </Pressable>
                 </View>
 
-                {/* BLOCO INFERIOR (Dividido lado a lado) */}
+                {/* Parte inferior */}
                 <View style={styles.box2}>
 
-
+                    {/* Lado esquerdo */}
                     <View style={styles.subBox1}>
+
+                        {/* Amarelo */}
                         <View style={styles.subsubBox1}>
-
-                            <Image
-                                style={styles.fullImage}
-                                resizeMode = 'cover'
-                                source={logo} 
-                    />
-
+                            <Pressable
+                                style={{ flex: 1 }}
+                                onPress={() => alert('Imagem Amarela')}
+                            >
+                                <Image
+                                    style={styles.fullImage}
+                                    resizeMode="cover"
+                                    source={logo}
+                                />
+                            </Pressable>
                         </View>
+
+                        {/* Roxo */}
                         <View style={styles.subsubBox2}>
-
-                            <Image
-                                style={styles.fullImage}
-                                resizeMode = 'cover'
-                                source={logo} 
-                    />
-
+                            <Pressable
+                                style={{ flex: 1 }}
+                                onPress={() => alert('Imagem Roxa')}
+                            >
+                                <Image
+                                    style={styles.fullImage}
+                                    resizeMode="cover"
+                                    source={logo}
+                                />
+                            </Pressable>
                         </View>
 
                     </View>
-                    
-                    {/* Lado Direito (Azul) */}
-                    <View style={styles.subBox2}>
 
-                        <Image
-                            style={styles.fullImage}
-                            resizeMode = 'cover'
-                            source={logo} 
-                        />
+                    {/* Azul */}
+                    <View style={styles.subBox2}>
+                        <Pressable
+                            style={{ flex: 1 }}
+                            onPress={() => alert('Imagem Azul')}
+                        >
+                            <Image
+                                style={styles.fullImage}
+                                resizeMode="cover"
+                                source={logo}
+                            />
+                        </Pressable>
                     </View>
 
                 </View>
@@ -75,40 +92,29 @@ const styles = StyleSheet.create({
     box1: {
         flex: 1,
         backgroundColor: 'red',
-        flexDirection: 'row',     
-        justifyContent: 'center', 
-        alignItems: 'center',     
     },
 
     box2: {
         flex: 1,
-        flexDirection: 'row', // Faz o lado verde/roxo/amarelo e o lado azul ficarem lado a lado
+        flexDirection: 'row',
     },
 
     subBox1: {
         flex: 1,
-        backgroundColor: 'green',
     },
 
     subsubBox1: {
         flex: 1,
         backgroundColor: 'yellow',
-        justifyContent: 'center', // Centraliza a imagem no bloco amarelo
-        alignItems: 'center',     // Centraliza a imagem no bloco amarelo
     },
 
     subsubBox2: {
         flex: 1,
         backgroundColor: 'purple',
-        justifyContent: 'center', // Centraliza a imagem no bloco roxo
-        alignItems: 'center',     // Centraliza a imagem no bloco roxo
     },
 
     subBox2: {
         flex: 1,
         backgroundColor: 'blue',
-        justifyContent: 'center', // Centraliza a imagem no bloco azul
-        alignItems: 'center',     // Centraliza a imagem no bloco azul
-
     },
 });
