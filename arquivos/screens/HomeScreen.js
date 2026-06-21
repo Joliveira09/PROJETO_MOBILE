@@ -16,6 +16,7 @@ export default function HomeScreen({ navigation }) {
           <Text style={styles.titulo}>HOME</Text>
 
           <View style={styles.gridBotoes}>
+
             <View style={styles.filaGrid}>
               <Pressable style={styles.boton} onPress={() => navigation.navigate('Details')}>
                 <Text style={styles.textoBoton}>Ir para Detalhes</Text>
@@ -34,6 +35,31 @@ export default function HomeScreen({ navigation }) {
               <Pressable style={styles.boton} onPress={() => navigation.navigate('Ex_02_part2')}>
                 <Text style={styles.textoBoton}>Ir para Ex_02_part2</Text>
               </Pressable>
+
+            </View>
+
+            <View style={styles.filaGrid}>
+
+              <Pressable style={styles.boton} onPress={() => navigation.navigate('Ex_03')}>
+                <Text style={styles.textoBoton}>Ir para Ex_03</Text>
+              </Pressable>
+
+              <Pressable style={styles.boton} onPress={() => navigation.navigate('Ex_03_part2')}>
+                <Text style={styles.textoBoton}>Ir para Ex_03_part2</Text>
+              </Pressable>
+
+            </View>
+
+            <View style={styles.filaGrid}>
+
+              <Pressable style={styles.boton} onPress={() => navigation.navigate('Ex_03_part3')}>
+                <Text style={styles.textoBoton}>Ir para Ex_03_part3</Text>
+              </Pressable>
+
+              <Pressable style={styles.boton} onPress={() => navigation.navigate('Ex_03_part4')}>
+                <Text style={styles.textoBoton}>Ir para Ex_03_part4</Text>
+              </Pressable>
+              
             </View>
           </View>
 
