@@ -13,19 +13,20 @@ export default function Ex_02_part2Screen({ navigation }) {
           </Text>
 
           <Text style={styles.instrucao}>
-            👉 Deslize o dedo do canto esquerdo da tela para o centro ou use o botão abaixo para abrir as opções.
+             Deslize o dedo do canto esquerdo da tela para o centro ou use o botão abaixo para abrir as opções.
           </Text>
 
           <View style={styles.gridBotoes}>
-            {/* Botão útil caso o usuário prefira clicar em vez de arrastar a tela */}
+          
             <Pressable style={styles.boton} onPress={() => navigation.openDrawer()}>
               <Text style={styles.textoBoton}>Abrir Menu Lateral ☰</Text>
             </Pressable>
 
-            {/* Botão opcional para voltar à tela principal controlada pelo Stack */}
+            
             <Pressable style={[styles.boton, styles.botonVoltar]} onPress={() => navigation.navigate('Home')}>
               <Text style={styles.textoBotonVoltar}>Voltar para o Início (Stack)</Text>
             </Pressable>
+
           </View>
 
         </View> 

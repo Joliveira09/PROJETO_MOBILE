@@ -27,6 +27,8 @@ function MenuEx02() {
         component={Ex_02_part2Screen} 
         options={{ title: 'Exercício 2 - Principal' }} 
       />
+
+
     </Drawer.Navigator>
   );
 }
