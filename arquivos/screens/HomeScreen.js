@@ -61,10 +61,17 @@ export default function HomeScreen({ navigation }) {
               </Pressable>
               
             </View>
-          </View>
 
+            <View style={styles.filaGrid}></View>
+
+
+              <Pressable style={styles.boton} onPress={() => navigation.navigate('Ex_03_part6')}>
+                <Text style={styles.textoBoton}>Ir para Ex_03_part6</Text>
+              </Pressable>
+
+            </View>
+          </View>
         </View> 
-      </View>
     </SafeAreaView>
   );
 }
