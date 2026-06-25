@@ -15,6 +15,7 @@ import Ex_03_part2Screen from './screens/Ex_03_part2Screen';
 import Ex_03_part3Screen from './screens/Ex_03_part3Screen';
 import Ex_03_part4Screen from './screens/Ex_03_part4Screen';
 import Ex_03_part6Screen from './screens/Ex_03_part6Screen';
+import Ex_04Screen from './screens/Ex_04Screen';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -48,6 +49,7 @@ export default function App() {
           <Stack.Screen name="Ex_03_part3" component={Ex_03_part3Screen} />
           <Stack.Screen name="Ex_03_part4" component={Ex_03_part4Screen} />
           <Stack.Screen name="Ex_03_part6" component={Ex_03_part6Screen} />
+          <Stack.Screen name="Ex_04" component={Ex_04Screen} />
 
 
 

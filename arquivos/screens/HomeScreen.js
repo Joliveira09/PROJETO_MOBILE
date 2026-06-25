@@ -6,11 +6,11 @@ export default function HomeScreen({ navigation }) {
     <SafeAreaView style={styles.appContainer}>
       <View style={styles.mainContainer}>
         <View style={styles.cardContainer}>
-          
-          <Image 
-            source={require('../assets/etec.jpg')} 
-            style={styles.logo} 
-            resizeMode="contain" 
+
+          <Image
+            source={require('../assets/etec.jpg')}
+            style={styles.logo}
+            resizeMode="contain"
           />
 
           <Text style={styles.titulo}>HOME</Text>
@@ -21,7 +21,7 @@ export default function HomeScreen({ navigation }) {
               <Pressable style={styles.boton} onPress={() => navigation.navigate('Details')}>
                 <Text style={styles.textoBoton}>Ir para Detalhes</Text>
               </Pressable>
-              
+
               <Pressable style={styles.boton} onPress={() => navigation.navigate('Ex01')}>
                 <Text style={styles.textoBoton}>Ir para Ex01</Text>
               </Pressable>
@@ -59,19 +59,26 @@ export default function HomeScreen({ navigation }) {
               <Pressable style={styles.boton} onPress={() => navigation.navigate('Ex_03_part4')}>
                 <Text style={styles.textoBoton}>Ir para Ex_03_part4</Text>
               </Pressable>
-              
+
             </View>
 
-            <View style={styles.filaGrid}></View>
+            <View style={styles.filaGrid}>
 
 
               <Pressable style={styles.boton} onPress={() => navigation.navigate('Ex_03_part6')}>
                 <Text style={styles.textoBoton}>Ir para Ex_03_part6</Text>
               </Pressable>
 
+
+
+              <Pressable style={styles.boton} onPress={() => navigation.navigate('Ex_04')}>
+                <Text style={styles.textoBoton}>Ir para Ex_04</Text>
+              </Pressable>
+
             </View>
           </View>
-        </View> 
+        </View>
+      </View>
     </SafeAreaView>
   );
 }
@@ -79,7 +86,7 @@ export default function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   appContainer: {
     flex: 1,
-    backgroundColor: '#e0e0e0', 
+    backgroundColor: '#e0e0e0',
   },
   mainContainer: {
     flex: 1,
@@ -94,13 +101,13 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 20,
     width: '100%',
-    maxWidth: 360, 
+    maxWidth: 360,
     alignItems: 'center',
   },
   logo: {
     width: 200,
     height: 100,
-    backgroundColor: '#fff', 
+    backgroundColor: '#fff',
     marginBottom: 20,
   },
   titulo: {
@@ -112,32 +119,32 @@ const styles = StyleSheet.create({
   },
   gridBotoes: {
     width: '100%',
-    gap: 12, 
+    gap: 12,
   },
   filaGrid: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
-    gap: 12, 
+    gap: 12,
   },
   boton: {
-    flex: 1, 
-    backgroundColor: '#f5b016', 
+    flex: 1,
+    backgroundColor: '#f5b016',
     paddingVertical: 12,
     borderRadius: 6,
     alignItems: 'center',
     justifyContent: 'center',
-    elevation: 2, 
-    shadowColor: '#000', 
+    elevation: 2,
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
   },
   botonVazio: {
-    flex: 1, 
+    flex: 1,
   },
   textoBoton: {
-    color: '#000', 
+    color: '#000',
     fontWeight: '600',
     fontSize: 14,
     textAlign: 'center',
