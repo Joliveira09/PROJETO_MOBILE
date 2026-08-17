@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet} from "react-native";
-import { colors } from "./src/styles/colors"; 
+import { colors } from "./theme/colors"; 
 
 
 export default function Home() {
