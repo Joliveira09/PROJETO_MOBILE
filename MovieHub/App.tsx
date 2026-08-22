@@ -1,18 +1,29 @@
-import { View, Text, StyleSheet} from "react-native";
-import { colors } from "./theme/colors"; 
+import { View, Text, StyleSheet } from "react-native";
+import { colors } from "./src/theme/colors";
+import React, { useState, useEffect } from 'react';
+import Splash from './src/screens/splash/index';
+import Login from './src/screens/login/index';
 
 
-export default function Home() {
-    return (
-        <View style = {styles.body}>
+export default function App() {
+  const [isLoading, setIsLoading] = useState(true);
 
-          <View style = {styles.container}>
+  useEffect(() => {
+    const timer = setTimeout(() => {
 
-            <Text style = {styles.text}>Olá Mundo!</Text>
+      setIsLoading(false);
+    }, 4000);
 
-          </View>
-        </View>
-    );
+    return () => clearTimeout(timer);
+
+  }, []);
+
+  if (isLoading) {
+    return <Splash />;
+  }
+
+
+  return <Login />;
 }
 
 const styles = StyleSheet.create({
