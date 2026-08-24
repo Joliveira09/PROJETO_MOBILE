@@ -1,3 +1,4 @@
+import CheckBox from "@react-native-community/checkbox";
 import React, {useState} from "react";
 import { View, Text, StyleSheet, Image, ActivityIndicator, TextInput } from "react-native";
 import { colors } from "../../theme/colors";
@@ -7,6 +8,8 @@ export default function Login() {
 
     const [ email, setEmail ] = useState("");
     const [ senha, setSenha ] = useState("");
+    const [marcado, setMarcado] = useState(false);
+
 
     function entrar() {
         console.log("Email:", email);
@@ -30,11 +33,37 @@ export default function Login() {
                         <View/>
                     </View>
                 </View>
-                <TextInput 
-                style = {styles.input}
-                placeholder="Seu@email.com"
-                placeholderTextColor={colors.textSecondary}
-                />
+                <View style = {styles.form}>
+
+                    <View style = {styles.textInput}>
+                        <Text style = {styles.info}>E-mail</Text>
+                        <TextInput 
+                        style = {styles.input}
+                        placeholder="Seu@email.com"
+                        placeholderTextColor={colors.textSecondary}
+                        />
+                    </View>
+                    <View style = {styles.textInput}>
+                        <Text style = {styles.info}>Senha</Text>
+                        <TextInput 
+                        style = {styles.input}
+                        placeholder="Digite sua Senha"
+                        placeholderTextColor={colors.textSecondary}
+                        />
+                        <View style={styles.checkboxContainer}>
+                            <CheckBox
+                                value={marcado}
+                                onValueChange={setMarcado}
+                            />
+
+                            <Text style={styles.checkboxText}>
+                                Lembrar de mim
+                            </Text>
+                        </View>
+                    </View>
+
+                </View>
+
             </View>
         </View>
             );
