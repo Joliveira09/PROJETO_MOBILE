@@ -18,12 +18,20 @@ export const styles = StyleSheet.create({
         flexDirection: "row"
     },
 
+    tituloSubtitulo: {
+        flexDirection: "column",
+    },
+
     text: {
         color: colors.text,
         fontFamily: "Arial",
         fontWeight: "bold",
         fontSize: 30,
         textAlign: "center",
+    },
+
+    subtitulo: {
+        color: colors.textSecondary
     },
 
     textHub: {
@@ -49,5 +57,10 @@ export const styles = StyleSheet.create({
     loading: {
         marginTop: 24,
         transform: [{ scale: 1.2 }],
+    },
+
+    input: {
+        backgroundColor: colors.inputBackground,
+        color: colors.textSecondary,
     },
 });
