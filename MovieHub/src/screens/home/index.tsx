@@ -1,22 +1,27 @@
 
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, ActivityIndicator, TextInput, Pressable, Button, TouchableOpacity } from "react-native";
+import { NavigationContainer } from '@react-navigation/native';
 import { colors } from "../../theme/colors";
 import { styles } from "./styles";
 
 export default function Home() {
-    
-    return(
 
-        <View style = {styles.body}>
-            <View style = {styles.container}>
-                <View style = {styles.titulo}>
-                    <View style={styles.titulo}>
+    return (
 
-                        <Text style={styles.text}>Movie</Text>
-                        <Text style={styles.textHub}>Hub</Text>
+        <View style={styles.body}>
+            <View style={styles.container}>
+                <View style={styles.titulo}>
+                    <View style={styles.header}>
 
+                        <View style={styles.titulo}>
+
+                            <Text style={styles.text}>Movie</Text>
+                            <Text style={styles.textHub}>Hub</Text>
+
+                        </View>
                     </View>
+
                 </View>
             </View>
         </View>

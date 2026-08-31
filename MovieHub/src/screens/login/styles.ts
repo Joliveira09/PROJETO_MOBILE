@@ -120,10 +120,9 @@ export const styles = StyleSheet.create({
     },
     
     button: {
-        flex: 1,
         borderRadius: 5,
         backgroundColor: "red",
-        height: 50,
+        height: 35,
         width: 300,
         alignItems: "center",
     },
@@ -131,7 +130,10 @@ export const styles = StyleSheet.create({
     textButton: {
         color: "white",
         textAlign: "center",
+        justifyContent: "center",
+        alignItems: "center",
         margin: 4,
+        fontSize: 24,
         fontWeight: "bold",
     },
 });

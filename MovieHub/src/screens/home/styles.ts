@@ -6,24 +6,28 @@ export const styles = StyleSheet.create({
     body: {
         flex: 1,
         backgroundColor: colors.background,
+        fontFamily: "Arial",
     },
 
     container: {
   
     },
 
+    header: {
+
+    },
+
     titulo: {
-      flex: 1,
       flexDirection: "row",
       justifyContent: "center",
-      marginTop: 15,
+      marginTop: 35,
     },
 
     text: {
         color: colors.text,
         fontFamily: "Arial",
         fontWeight: "bold",
-        fontSize: 30,
+        fontSize: 35,
         textAlign: "center",
     },
 
@@ -31,7 +35,7 @@ export const styles = StyleSheet.create({
         color: "red",
         fontFamily: "Arial",
         fontWeight: "bold",
-        fontSize: 30,
+        fontSize: 35,
         textAlign: "center",
     },
 });
