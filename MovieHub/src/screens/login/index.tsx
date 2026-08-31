@@ -1,10 +1,10 @@
-import CheckBox from "@react-native-community/checkbox";
+
 import React, {useState} from "react";
-import { View, Text, StyleSheet, Image, ActivityIndicator, TextInput } from "react-native";
+import { View, Text, StyleSheet, Image, ActivityIndicator, TextInput, Pressable, Button, TouchableOpacity } from "react-native";
 import { colors } from "../../theme/colors";
 import { styles } from "./styles";
 
-export default function Login() {
+export default function Login({ navigation }) {
 
     const [ email, setEmail ] = useState("");
     const [ senha, setSenha ] = useState("");
@@ -50,16 +50,30 @@ export default function Login() {
                         placeholder="Digite sua Senha"
                         placeholderTextColor={colors.textSecondary}
                         />
-                        <View style={styles.checkboxContainer}>
-                            <CheckBox
-                                value={marcado}
-                                onValueChange={setMarcado}
-                            />
+                    </View>
 
-                            <Text style={styles.checkboxText}>
-                                Lembrar de mim
-                            </Text>
+                    <Pressable
+                        style = {styles.checkboxContainer}
+                        onPress={() => setMarcado(!marcado)}
+                    >
+                        <View style = {[styles.checkbox, marcado && styles.checkboxMarcado]}>
+                            {marcado && (
+                                <Text style = {styles.check}>
+                                    ✓
+                                </Text>
+                            )}
                         </View>
+                        <Text style={styles.checkboxText}>
+                            Manter conectado
+                        </Text>
+                    </Pressable>
+
+                    <View style = {styles.logar}>
+                        <TouchableOpacity style = {styles.button} onPress={() => navigation.navigate("Home")}>
+                            <Text style = {styles.textButton}>
+                                Entrar
+                            </Text>
+                        </TouchableOpacity>
                     </View>
 
                 </View>

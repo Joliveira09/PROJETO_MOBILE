@@ -3,6 +3,11 @@ import { colors } from "./src/theme/colors";
 import React, { useState, useEffect } from 'react';
 import Splash from './src/screens/splash/index';
 import Login from './src/screens/login/index';
+import Home from './src/screens/home/index';
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+const Stack = createNativeStackNavigator();
 
 
 export default function App() {
@@ -23,7 +28,16 @@ export default function App() {
   }
 
 
-  return <Login />;
+  return (
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{ headerShown: false, }}>
+        
+        <Stack.Screen name="Login" component={Login}/>
+        <Stack.Screen name="Home" component={Home}/>
+
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 }
 
 const styles = StyleSheet.create({

@@ -1,6 +1,5 @@
 import { StyleSheet } from "react-native";
 import { colors } from "../../theme/colors";
-import CheckBoxWithRef from "@react-native-community/checkbox/dist/js/CheckBox.ios";
 
 export const styles = StyleSheet.create({
     body: {
@@ -85,10 +84,54 @@ export const styles = StyleSheet.create({
     },
 
     checkboxContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        width: 300,
+    },
 
+    checkbox: {
+        width: 20,
+        height: 20,
+        borderWidth: 2,
+        borderColor: colors.textSecondary,
+        borderRadius: 4,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+
+    checkboxMarcado: {
+        backgroundColor: "red",
+        borderColor: "red",
+    },
+
+    check: {
+        color: "white",
+        fontWeight: "bold",
+        fontSize: 14,
     },
 
     checkboxText: {
-        
+        color: colors.textSecondary,
+        marginLeft: 8,
+    },
+
+    logar: {
+        marginTop: 30,
+    },
+    
+    button: {
+        flex: 1,
+        borderRadius: 5,
+        backgroundColor: "red",
+        height: 50,
+        width: 300,
+        alignItems: "center",
+    },
+
+    textButton: {
+        color: "white",
+        textAlign: "center",
+        margin: 4,
+        fontWeight: "bold",
     },
 });
