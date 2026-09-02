@@ -12,14 +12,14 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         borderRadius: 10,
         padding: 24,
-    },
-
-    titulo: {
-        flexDirection: "row"
+        marginTop: 50,
     },
 
     tituloSubtitulo: {
-        flexDirection: "column",
+        flexDirection: "row",
+        justifyContent: "center",
+        marginBottom: 80,
+
     },
 
     text: {
@@ -32,27 +32,6 @@ export const styles = StyleSheet.create({
 
     subtitulo: {
         color: colors.textSecondary
-    },
-
-    textHub: {
-        color: "red",
-        fontFamily: "Arial",
-        fontWeight: "bold",
-        fontSize: 30,
-        textAlign: "center",
-    },
-
-    image: {
-        width: 80,
-        height: 80,
-        resizeMode: "contain",
-    },
-
-    textImage: {
-        flexDirection: "row",
-        alignItems: "center",
-        marginTop: 70,
-        marginBottom: 85,
     },
 
     loading: {
@@ -69,14 +48,15 @@ export const styles = StyleSheet.create({
         backgroundColor: colors.inputBackground,
         color: colors.textSecondary,
         padding: 3,
-        marginBottom: 16,
         borderRadius: 5,
         width: 300,
         height: 30,
+        marginBottom: 15,
     },
 
     form: {
         alignItems: "center",
+        marginBottom: 20,
     },
 
     textInput: {
@@ -115,7 +95,7 @@ export const styles = StyleSheet.create({
         marginLeft: 8,
     },
 
-    logar: {
+    cadastrar: {
         marginTop: 30,
     },
     
@@ -137,13 +117,12 @@ export const styles = StyleSheet.create({
         fontWeight: "bold",
     },
 
-    cadastrar: {
+    login: {
         flexDirection: "row",
         marginTop: 15,
-
     },
 
-    cadastrarText: {
+    loginText: {
         color: colors.textSecondary,
         paddingRight: 6,
     },

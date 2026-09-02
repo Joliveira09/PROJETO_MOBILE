@@ -3,6 +3,7 @@ import { colors } from "./src/theme/colors";
 import React, { useState, useEffect } from 'react';
 import Splash from './src/screens/splash/index';
 import Login from './src/screens/login/index';
+import Cadastro from './src/screens/cadastro/index';
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import TabRoutes from './src/routes/tab.routes';
@@ -28,6 +29,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Cadastro" component={Cadastro} />
         <Stack.Screen name="Home" component={TabRoutes} />
       </Stack.Navigator>
     </NavigationContainer>
