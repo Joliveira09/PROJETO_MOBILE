@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
     },
 
     container: {
-  
+        marginLeft: 20,
     },
 
     header: {
@@ -20,7 +20,11 @@ export const styles = StyleSheet.create({
     titulo: {
       flexDirection: "row",
       justifyContent: "center",
-      marginTop: 35,
+      marginTop: 60,
+    },
+
+    article: {
+        marginTop: 10,
     },
 
     text: {
@@ -37,5 +41,21 @@ export const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 35,
         textAlign: "center",
+    },
+
+    buttonAddMovies: {
+        color: colors.text,
+        backgroundColor: colors.primary,
+        borderRadius: 5,
+        width: 50,
+        fontFamily: "Arial",
+        fontWeight: "bold",
+        fontSize: 35,
+        textAlign: "center",
+        marginTop: 10,
+    },
+
+    addMovieSearch: {
+
     },
 });
