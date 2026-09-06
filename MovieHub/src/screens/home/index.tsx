@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, FlatList, Image } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useIsFocused } from "@react-navigation/native";
 import { colors } from "../../theme/colors";
 import { styles } from "./styles";
 
@@ -16,7 +17,6 @@ export default function Home({ navigation }) {
             const userData = await AsyncStorage.getItem("@user_data");
             if (userData) {
                 const user = JSON.parse(userData);
-                // Pega a propriedade nome salva no cadastro (ou define um padrão)
                 setNomeUsuario(user.nome || "Usuário");
             }
         } catch (error) {
@@ -37,7 +37,7 @@ export default function Home({ navigation }) {
                         <Text style={styles.textHub}>Hub</Text>
 
                     </View>
-                    <View style = {styles.article}>
+                    <View style={styles.article}>
 
                         <View style={{ marginTop: 15, marginBottom: 10 }}>
                             <Text style={{ fontSize: 22, color: colors.text || "#FFF", fontWeight: "bold" }}>
@@ -46,14 +46,19 @@ export default function Home({ navigation }) {
 
                         </View>
 
-                        <View style = {styles.addMovieSearch}>
+                        <View style={styles.addMovieSearch}>
 
+                            <TouchableOpacity style = {styles.search} onPress={() => navigation.navigate("Search")}>
+
+                                <Text style= {styles.textSearch}>Pesquisar por título ou gênero...</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity onPress={() => navigation.navigate("addMovies")}>
+                                <Text style={styles.buttonAddMovies}>+</Text>
+                            </TouchableOpacity>
 
                         </View>
 
-                        <TouchableOpacity onPress={() => navigation.navigate("addMovies")}>
-                            <Text style={styles.buttonAddMovies}>+</Text>
-                        </TouchableOpacity>
                     </View>
 
 

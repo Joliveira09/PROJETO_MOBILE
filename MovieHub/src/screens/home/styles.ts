@@ -18,9 +18,9 @@ export const styles = StyleSheet.create({
     },
 
     titulo: {
-      flexDirection: "row",
-      justifyContent: "center",
-      marginTop: 60,
+        flexDirection: "row",
+        justifyContent: "center",
+        marginTop: 60,
     },
 
     article: {
@@ -52,10 +52,30 @@ export const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 35,
         textAlign: "center",
-        marginTop: 10,
+  
     },
 
     addMovieSearch: {
+        flexDirection: "row",
+        marginTop: 10,
+        gap: 10,
+        alignItems: "center",
+    },
+
+    search: {
+        backgroundColor: "#222",
+        paddingHorizontal: 15,
+        paddingVertical: 8,
+        borderRadius: 8,
+        borderWidth: 1,
+        width: 300,
+        borderColor: "#444"
+    },
+
+    textSearch: {
+        color: "#888",
+        fontFamily: "Arial",
+        fontSize: 17,
 
     },
 });
