@@ -107,7 +107,7 @@ export const styles = StyleSheet.create({
         fontSize: 14,
     },
 
-    // Estrelas
+
     starsContainer: {
         flexDirection: "row",
         gap: 12,
@@ -119,7 +119,7 @@ export const styles = StyleSheet.create({
         color: colors.primary || "red",
     },
 
-    // Status
+
     statusContainer: {
         flexDirection: "row",
         gap: 8,
@@ -153,7 +153,7 @@ export const styles = StyleSheet.create({
         fontWeight: "bold",
     },
 
-    // Botões de Ação Final
+
     actionButtonsContainer: {
         marginTop: 24,
         marginBottom: 40,

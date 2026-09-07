@@ -24,6 +24,7 @@ export interface Movie {
   status?: string;
   trailerUrl?: string;
   favorito?: boolean;
+  dataLancamento: string;
 }
 
 interface MoviesProps {
@@ -173,9 +174,11 @@ export default function Movies({ navigation }: MoviesProps) {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 30 }}
           renderItem={({ item }) => (
+
+
             <TouchableOpacity 
               style={styles.card}
-              onPress={() => navigation.navigate("AddMovies", { movie: item })}
+              onPress={() => navigation.navigate("infoMovies", { movie: item })}
             >
               {item.capa ? (
                 <Image source={{ uri: item.capa }} style={styles.capa} />

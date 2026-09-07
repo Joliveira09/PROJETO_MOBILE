@@ -45,7 +45,7 @@ export default function Movies({ navigation }) {
         }
     }
 
-    // Tirar foto com a Câmera
+
     async function tirarFoto() {
         const permission = await ImagePicker.requestCameraPermissionsAsync();
         if (!permission.granted) {
@@ -64,7 +64,7 @@ export default function Movies({ navigation }) {
         }
     }
 
-    // Salvar o Filme no AsyncStorage
+
     async function salvarFilme() {
         if (!titulo || !genero || !ano) {
             Alert.alert("Atenção", "Preencha ao menos o Título, Gênero e Ano.");
@@ -82,7 +82,8 @@ export default function Movies({ navigation }) {
             descricao,
             nota,
             status,
-            trailerUrl
+            trailerUrl,
+            dataLancamento: new Date().toISOString()
         };
 
         try {

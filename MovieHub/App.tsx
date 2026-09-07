@@ -6,6 +6,7 @@ import Login from './src/screens/login/index';
 import Cadastro from './src/screens/cadastro/index';
 import addMovies from './src/screens/addMovies/index';
 import Search from './src/screens/search/index';
+import InfoMovies from './src/screens/infoMovies/index';
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import TabRoutes from './src/routes/tab.routes';
@@ -35,6 +36,7 @@ export default function App() {
         <Stack.Screen name="Home" component={TabRoutes} />
         <Stack.Screen name="addMovies" component={addMovies} />
         <Stack.Screen name="Search" component={Search} />
+        <Stack.Screen name="infoMovies" component={InfoMovies} />
       </Stack.Navigator>
     </NavigationContainer>
   );

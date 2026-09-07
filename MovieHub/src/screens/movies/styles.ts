@@ -157,6 +157,10 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 
+  rowInfo: {},
+
+  statusBadge: {},
+
   heartButton: {
     padding: 8,
   },
