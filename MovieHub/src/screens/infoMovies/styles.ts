@@ -243,4 +243,57 @@ export const styles = StyleSheet.create({
 
     },
 
+    atividades: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginTop: 20,
+        gap: 8,
+    },
+    curtir: {
+        flex: 1,
+        height: 70,
+        backgroundColor: "#1C1C1E",
+        borderRadius: 12,
+        borderWidth: 1,
+        borderColor: "#333",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    editar: {
+        flex: 1,
+        height: 70,
+        backgroundColor: "#1C1C1E",
+        borderRadius: 12,
+        borderWidth: 1,
+        borderColor: "#FFC107",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    excluir: {
+        flex: 1,
+        height: 70,
+        backgroundColor: "#1C1C1E",
+        borderRadius: 12,
+        borderWidth: 1,
+        borderColor: "#E50914",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    compartilhar: {
+        flex: 1,
+        height: 70,
+        backgroundColor: "#1C1C1E",
+        borderRadius: 12,
+        borderWidth: 1,
+        borderColor: "#4CAF50",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    actionText: {
+        color: "#FFF",
+        fontSize: 12,
+        marginTop: 4,
+    },
+
 });

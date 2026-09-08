@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, Image, ScrollView, Alert, Linking } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Ionicons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Movie } from "../movies/index";
 import { styles } from "./styles";
@@ -9,6 +11,7 @@ export type RootStackParamList = {
     Cadastro: undefined;
     Home: undefined;
     addMovies: undefined;
+    Editar: { movie: Movie };
     Search: undefined;
     infoMovies: { movie: Movie };
 };
@@ -19,6 +22,7 @@ export default function InfoMovies({ navigation, route }: Props) {
     const { movie } = route.params;
 
     const [nota, setNota] = useState<number>(Number(movie?.nota) || 0);
+    const [favorito, setFavorito] = useState<boolean>(Boolean(movie?.favorito));
 
     const formatarDataLancamento = (data?: string) => {
         if (!data) return "Data não informada";
@@ -35,6 +39,71 @@ export default function InfoMovies({ navigation, route }: Props) {
         return `${dia}/${mes}/${ano}`;
     };
 
+
+    const handleToggleFavorito = async () => {
+        try {
+            const novoFavorito = !favorito;
+            setFavorito(novoFavorito);
+
+            const storage = await AsyncStorage.getItem("@filmes_data");
+            if (storage) {
+                const filmes: Movie[] = JSON.parse(storage);
+                const filmesAtualizados = filmes.map((f) =>
+                    f.id === movie.id ? { ...f, favorito: novoFavorito } : f
+                );
+                await AsyncStorage.setItem("@filmes_data", JSON.stringify(filmesAtualizados));
+            }
+        } catch (error) {
+            console.log("Erro ao alternar favorito:", error);
+        }
+    };
+
+
+    const handleEditar = () => {
+        navigation.navigate("Editar", { movie });
+    };
+
+
+    const handleExcluir = () => {
+        Alert.alert(
+            "Excluir Filme",
+            `Tem certeza que deseja remover "${movie?.titulo}"?`,
+            [
+                { text: "Cancelar", style: "cancel" },
+                {
+                    text: "Excluir",
+                    style: "destructive",
+                    onPress: async () => {
+                        try {
+                            const storage = await AsyncStorage.getItem("@filmes_data");
+                            if (storage) {
+                                const filmes: Movie[] = JSON.parse(storage);
+                                const filmesFiltrados = filmes.filter((f) => f.id !== movie.id);
+                                await AsyncStorage.setItem("@filmes_data", JSON.stringify(filmesFiltrados));
+                            }
+                            navigation.goBack();
+                        } catch (error) {
+                            console.log("Erro ao excluir filme:", error);
+                        }
+                    },
+                },
+            ]
+        );
+    };
+
+
+    const handleCompartilhar = () => {
+
+    };
+
+
+    const handleOpenTrailer = () => {
+        if (movie?.trailerUrl) {
+            Linking.openURL(movie.trailerUrl).catch(() => {
+                Alert.alert("Erro", "Não foi possível abrir o link do trailer.");
+            });
+        }
+    };
 
     const subtitulo = [
         movie?.ano || null,
@@ -139,17 +208,41 @@ export default function InfoMovies({ navigation, route }: Props) {
                         </View>
 
                         <View style={styles.trailer}>
-
                             <Text style={styles.tituloTrailer}>Trailer</Text>
-                            <View style={styles.subContainerTrailer}>
-                                
+                            <TouchableOpacity style={styles.subContainerTrailer} onPress={handleOpenTrailer}>
                                 <Image
                                     source={require("../../../assets/images/Youtube_logo.png")}
                                     style={styles.image}
                                 />
-                                <Text style = {styles.textTrailer}>Assistir o trailer no Youtube</Text>
+                                <Text style={styles.textTrailer}>Assistir o trailer no Youtube</Text>
+                            </TouchableOpacity>
+                        </View>
 
-                            </View>
+
+                        <View style={styles.atividades}>
+                            <TouchableOpacity style={styles.curtir} onPress={handleToggleFavorito}>
+                                <Ionicons
+                                    name={favorito ? "heart" : "heart-outline"}
+                                    size={24}
+                                    color={favorito ? "#E50914" : "#FFF"}
+                                />
+                                <Text style={styles.actionText}>Favorito</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.editar} onPress={handleEditar}>
+                                <Ionicons name="create-outline" size={24} color="#FFC107" />
+                                <Text style={styles.actionText}>Editar</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.excluir} onPress={handleExcluir}>
+                                <Ionicons name="trash-outline" size={24} color="#E50914" />
+                                <Text style={styles.actionText}>Excluir</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.compartilhar} onPress={handleCompartilhar}>
+                                <Ionicons name="share-social-outline" size={24} color="#4CAF50" />
+                                <Text style={styles.actionText}>Compartilhar</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
                 </View>

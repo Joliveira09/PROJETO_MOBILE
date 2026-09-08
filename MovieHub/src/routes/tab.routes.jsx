@@ -1,19 +1,29 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
 import Home from '../screens/home/index';
 import { colors } from '../theme/colors';
 import Movies from '../screens/movies';
+import InfoMovies from '../screens/infoMovies';
 import Favorites from '../screens/favorites/index';
 import Perfil from '../screens/perfil/index';
-import { View } from 'react-native';
-
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
+
+// 1. Stack interno para a aba de Filmes
+function MoviesStack() {
+    return (
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="moviesList" component={Movies} />
+            <Stack.Screen name="infoMovies" component={InfoMovies} />
+        </Stack.Navigator>
+    );
+}
 
 export default function TabRoutes() {
     return (
-
         <Tab.Navigator
             screenOptions={{
                 headerShown: false,
@@ -38,9 +48,10 @@ export default function TabRoutes() {
                 }}
             />
 
+            {/* 2. Alterado 'component' de Movies para MoviesStack */}
             <Tab.Screen
                 name="Filmes"
-                component={Movies}
+                component={MoviesStack}
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <Ionicons name="film-outline" size={size} color={color} />
@@ -68,6 +79,5 @@ export default function TabRoutes() {
                 }}
             />
         </Tab.Navigator>
-
     );
 }
