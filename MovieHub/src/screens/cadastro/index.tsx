@@ -1,14 +1,36 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Alert, Image } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as ImagePicker from "expo-image-picker";
 import { colors } from "../../theme/colors";
 import { styles } from "./styles";
 
-export default function Cadastro({ navigation }) {
+export default function Cadastro({ navigation }: any) {
+    const [foto, setFoto] = useState<string | null>(null);
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [confirmarSenha, setConfirmarSenha] = useState("");
+
+    async function handleSelecionarFoto() {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        
+        if (status !== "granted") {
+            Alert.alert("Permissão necessária", "Precisamos de acesso às suas fotos para alterar o perfil.");
+            return;
+        }
+
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [1, 1],
+            quality: 0.8,
+        });
+
+        if (!result.canceled) {
+            setFoto(result.assets[0].uri);
+        }
+    }
 
     async function handleCadastrar() {
         if (!nome || !email || !senha || !confirmarSenha) {
@@ -27,7 +49,7 @@ export default function Cadastro({ navigation }) {
         }
 
         try {
-            const novoUsuario = { nome, email, senha };
+            const novoUsuario = { foto, nome, email, senha };
             await AsyncStorage.setItem("@user_data", JSON.stringify(novoUsuario));
 
             Alert.alert("Sucesso", "Cadastro realizado com sucesso!", [
@@ -42,14 +64,28 @@ export default function Cadastro({ navigation }) {
         <View style={styles.body}>
             <View style={styles.container}>
                 <View style={styles.tituloSubtitulo}>
-                    <View>
-                        <Text style={styles.text}>Criar Conta</Text>
-                        <Text style={styles.subtitulo}>Preencha os dados abaixo</Text>
-                    </View>
+                    <Text style={styles.text}>Criar Conta</Text>
+                    <Text style={styles.subtitulo}>Preencha os dados abaixo</Text>
+                </View>
+
+
+                <View style={styles.avatarContainer}>
+                    <TouchableOpacity style={styles.avatarCircle} onPress={handleSelecionarFoto}>
+                        {foto ? (
+                            <Image source={{ uri: foto }} style={styles.avatarImage} />
+                        ) : (
+                            <Text style={styles.cameraIconLarge}>📷</Text>
+                        )}
+                        <View style={styles.badgeIcon}>
+                            <Text style={styles.badgeCameraText}>📷</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={handleSelecionarFoto}>
+                        <Text style={styles.addPhotoText}>Adicionar foto (opcional)</Text>
+                    </TouchableOpacity>
                 </View>
 
                 <View style={styles.form}>
-
                     <View style={styles.textInput}>
                         <Text style={styles.info}>Nome completo</Text>
                         <TextInput
@@ -74,7 +110,6 @@ export default function Cadastro({ navigation }) {
                         />
                     </View>
 
-                    {/* Campo Senha */}
                     <View style={styles.textInput}>
                         <Text style={styles.info}>Senha</Text>
                         <TextInput

@@ -12,31 +12,75 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         borderRadius: 10,
         padding: 24,
-        marginTop: 50,
+        marginTop: 30,
     },
 
     tituloSubtitulo: {
-        flexDirection: "row",
-        justifyContent: "center",
-        marginBottom: 80,
-
+        alignItems: "center",
+        marginBottom: 20,
     },
 
     text: {
         color: colors.text,
         fontFamily: "Arial",
         fontWeight: "bold",
-        fontSize: 30,
+        fontSize: 26,
         textAlign: "center",
     },
 
     subtitulo: {
-        color: colors.textSecondary
+        color: colors.textSecondary,
+        marginTop: 4,
     },
 
-    loading: {
-        marginTop: 24,
-        transform: [{ scale: 1.2 }],
+
+    avatarContainer: {
+        alignItems: "center",
+        marginBottom: 20,
+    },
+
+    avatarCircle: {
+        width: 100,
+        height: 100,
+        borderRadius: 50,
+        backgroundColor: "rgba(255,255,255,0.08)",
+        justifyContent: "center",
+        alignItems: "center",
+        position: "relative",
+    },
+
+    avatarImage: {
+        width: 100,
+        height: 100,
+        borderRadius: 50,
+    },
+
+    cameraIconLarge: {
+        fontSize: 36,
+        opacity: 0.6,
+    },
+
+    badgeIcon: {
+        position: "absolute",
+        bottom: 2,
+        right: 2,
+        backgroundColor: "#FFB800",
+        borderRadius: 12,
+        width: 26,
+        height: 26,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+
+    badgeCameraText: {
+        fontSize: 12,
+    },
+
+    addPhotoText: {
+        color: "#FFB800",
+        marginTop: 8,
+        fontSize: 13,
+        fontWeight: "500",
     },
 
     info: {
@@ -47,73 +91,38 @@ export const styles = StyleSheet.create({
     input: {
         backgroundColor: colors.inputBackground,
         color: colors.textSecondary,
-        padding: 3,
-        borderRadius: 5,
+        paddingHorizontal: 10,
+        borderRadius: 8,
         width: 300,
-        height: 30,
-        marginBottom: 15,
+        height: 40,
+        marginBottom: 12,
     },
 
     form: {
         alignItems: "center",
-        marginBottom: 20,
+        width: "100%",
     },
 
     textInput: {
         alignItems: "flex-start",
     },
 
-    checkboxContainer: {
-        flexDirection: "row",
-        alignItems: "center",
-        width: 300,
-    },
-
-    checkbox: {
-        width: 20,
-        height: 20,
-        borderWidth: 2,
-        borderColor: colors.textSecondary,
-        borderRadius: 4,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-
-    checkboxMarcado: {
-        backgroundColor: "red",
-        borderColor: "red",
-    },
-
-    check: {
-        color: "white",
-        fontWeight: "bold",
-        fontSize: 14,
-    },
-
-    checkboxText: {
-        color: colors.textSecondary,
-        marginLeft: 8,
-    },
-
     cadastrar: {
-        marginTop: 30,
+        marginTop: 20,
     },
     
     button: {
-        borderRadius: 5,
-        backgroundColor: "red",
-        height: 35,
+        borderRadius: 8,
+        backgroundColor: "#FFB800",
+        height: 45,
         width: 300,
         alignItems: "center",
+        justifyContent: "center",
     },
 
     textButton: {
-        color: "white",
-        textAlign: "center",
-        justifyContent: "center",
-        alignItems: "center",
-        margin: 4,
-        fontSize: 24,
+        color: "#000",
+        fontSize: 18,
         fontWeight: "bold",
     },
 
@@ -124,6 +133,5 @@ export const styles = StyleSheet.create({
 
     loginText: {
         color: colors.textSecondary,
-        paddingRight: 6,
     },
 });
