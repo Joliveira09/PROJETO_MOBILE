@@ -64,7 +64,7 @@ export const styles = StyleSheet.create({
         position: "absolute",
         bottom: 2,
         right: 2,
-        backgroundColor: "#FFB800",
+        backgroundColor: colors.primary,
         borderRadius: 12,
         width: 26,
         height: 26,
@@ -77,7 +77,7 @@ export const styles = StyleSheet.create({
     },
 
     addPhotoText: {
-        color: "#FFB800",
+        color: colors.primary,
         marginTop: 8,
         fontSize: 13,
         fontWeight: "500",
@@ -113,7 +113,7 @@ export const styles = StyleSheet.create({
     
     button: {
         borderRadius: 8,
-        backgroundColor: "#FFB800",
+        backgroundColor: "red",
         height: 45,
         width: 300,
         alignItems: "center",
@@ -121,7 +121,7 @@ export const styles = StyleSheet.create({
     },
 
     textButton: {
-        color: "#000",
+        color: "white",
         fontSize: 18,
         fontWeight: "bold",
     },

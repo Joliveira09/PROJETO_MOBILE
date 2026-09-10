@@ -1,11 +1,11 @@
 import React, { useState, useCallback } from "react";
-import { 
-  View, 
-  Text, 
-  TextInput, 
-  TouchableOpacity, 
-  FlatList, 
-  Image 
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  FlatList,
+  Image
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
@@ -43,8 +43,8 @@ export default function Search({ navigation }) {
   function filtrarLista(texto, lista) {
     if (!texto || texto.trim() === "") {
       setFilmesFiltrados(lista);
-    } 
-    
+    }
+
     else {
 
       const termoBusca = texto.toLowerCase();
@@ -72,14 +72,24 @@ export default function Search({ navigation }) {
           <Text style={styles.backButtonText}>←</Text>
         </TouchableOpacity>
 
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Digite o nome ou gênero do filme..."
-          placeholderTextColor="#888"
-          value={busca}
-          onChangeText={handleSearch}
-          autoFocus={true}
-        />
+        <View style={styles.searchFilter}>
+
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Digite o nome ou gênero do filme..."
+            placeholderTextColor="#888"
+            value={busca}
+            onChangeText={handleSearch}
+            autoFocus={true}
+          />
+
+          <TouchableOpacity style = {styles.filter} onPress={() => navigation.getParent()?.navigate("Filter")}>
+            <Text style = {styles.textFilter}>Y Filtros</Text>
+          </TouchableOpacity>
+        </View>
+
+
+
       </View>
 
       <FlatList

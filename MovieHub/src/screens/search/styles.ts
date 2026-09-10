@@ -73,8 +73,11 @@ export const styles = StyleSheet.create({
         fontWeight: "900",
     },
 
+    searchFilter: {
+        flexDirection: "row"
+    },
+
     searchInput: {
-        flex: 1,
         backgroundColor: "#222",
         color: "#FFF",
         paddingHorizontal: 15,
@@ -84,6 +87,23 @@ export const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: "#333",
     },
+
+    filter: {
+        borderWidth: 1,
+        borderRadius: 5,
+        borderColor: colors.primary,
+        marginLeft: 8,
+        paddingHorizontal: 10,
+        justifyContent: "center",
+    },
+
+    textFilter: {
+        color: colors.primary,
+        fontWeight: "bold",
+        fontFamily: "arial",
+    },
+
+
 
     card: {
         flexDirection: "row",
