@@ -127,9 +127,6 @@ export default function Movies({ navigation }: MoviesProps) {
 
         <View style={styles.header}>
           <Text style={styles.tituloHeader}>Filmes</Text>
-          <TouchableOpacity style={styles.iconButton}>
-            <Text style={styles.funnelIcon}>Y</Text>
-          </TouchableOpacity>
         </View>
 
 
@@ -145,7 +142,7 @@ export default function Movies({ navigation }: MoviesProps) {
             />
           </View>
           <TouchableOpacity style={styles.filterButton}>
-            <Text style={styles.filterIcon}>⚙️</Text>
+            <Text style={styles.filterIcon} onPress = {() => navigation.navigate("Filter")}>Y</Text>
           </TouchableOpacity>
         </View>
 

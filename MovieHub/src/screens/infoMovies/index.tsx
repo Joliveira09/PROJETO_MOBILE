@@ -14,6 +14,7 @@ export type RootStackParamList = {
     Editar: { movie: Movie };
     Search: undefined;
     infoMovies: { movie: Movie };
+    CompartilharMovies: { movie: Movie };
 };
 
 type Props = NativeStackScreenProps<RootStackParamList, "infoMovies">;
@@ -39,7 +40,6 @@ export default function InfoMovies({ navigation, route }: Props) {
         return `${dia}/${mes}/${ano}`;
     };
 
-
     const handleToggleFavorito = async () => {
         try {
             const novoFavorito = !favorito;
@@ -58,11 +58,9 @@ export default function InfoMovies({ navigation, route }: Props) {
         }
     };
 
-
     const handleEditar = () => {
         navigation.navigate("Editar", { movie });
     };
-
 
     const handleExcluir = () => {
         Alert.alert(
@@ -91,11 +89,9 @@ export default function InfoMovies({ navigation, route }: Props) {
         );
     };
 
-
     const handleCompartilhar = () => {
-
+        navigation.navigate("CompartilharMovies", { movie });
     };
-
 
     const handleOpenTrailer = () => {
         if (movie?.trailerUrl) {
@@ -217,7 +213,6 @@ export default function InfoMovies({ navigation, route }: Props) {
                                 <Text style={styles.textTrailer}>Assistir o trailer no Youtube</Text>
                             </TouchableOpacity>
                         </View>
-
 
                         <View style={styles.atividades}>
                             <TouchableOpacity style={styles.curtir} onPress={handleToggleFavorito}>

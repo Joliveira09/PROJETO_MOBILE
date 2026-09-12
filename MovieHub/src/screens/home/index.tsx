@@ -63,7 +63,6 @@ export default function Home({ navigation }: any) {
         }, [carregarDados])
     );
 
-    // Função para alternar o status de favorito na Home e salvar no AsyncStorage
     async function toggleFavorito(id: string) {
         const atualizados = filmes.map((filme) => {
             if (filme.id === id) {
@@ -86,10 +85,10 @@ export default function Home({ navigation }: any) {
         }
     }
 
-    // Filtra considerando tanto 'favorito' quanto 'isFavorito'
+
     const filmesFavoritos = filmes.filter((f) => Boolean(f.favorito || f.isFavorito));
 
-    // Métricas de resumo baseadas no status
+
     const totalFilmes = filmes.length;
     const assistidos = filmes.filter((f) => {
         const status = (f.status || "").trim().toLowerCase();
@@ -120,7 +119,7 @@ export default function Home({ navigation }: any) {
                         </View>
                     )}
 
-                    {/* Botão para favoritar direto no Card da Home */}
+ 
                     <TouchableOpacity 
                         style={{ position: "absolute", top: 6, right: 6, backgroundColor: "rgba(0,0,0,0.6)", borderRadius: 12, padding: 4 }}
                         onPress={() => toggleFavorito(item.id)}
@@ -143,23 +142,16 @@ export default function Home({ navigation }: any) {
         <View style={styles.body}>
             <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
 
-                {/* Top Header */}
+
                 <View style={styles.topHeader}>
-                    <TouchableOpacity style={styles.iconButton}>
-                        <Text style={styles.topIconText}>≡</Text>
-                    </TouchableOpacity>
 
                     <View style={styles.titulo}>
                         <Text style={styles.text}>Movie</Text>
                         <Text style={styles.textHub}>Hub</Text>
                     </View>
 
-                    <TouchableOpacity style={styles.iconButton}>
-                        <Text style={styles.topIconText}>🔔</Text>
-                    </TouchableOpacity>
                 </View>
 
-                {/* Saudação */}
                 <View style={styles.greetingContainer}>
                     <Text style={styles.greetingText}>Olá, {nomeUsuario}! 👋</Text>
                     <Text style={styles.subGreetingText}>Desfrute dos seus filmes favoritos.</Text>

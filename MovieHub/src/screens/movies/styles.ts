@@ -78,7 +78,8 @@ export const styles = StyleSheet.create({
   },
 
   filterIcon: {
-    fontSize: 16,
+    fontSize: 22,
+    color: colors.primary,
   },
 
   tabsContainer: {

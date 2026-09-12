@@ -15,13 +15,9 @@ export const styles = StyleSheet.create({
 
     topHeader: {
         flexDirection: "row",
-        justifyContent: "space-between",
+        justifyContent: "center",
         alignItems: "center",
         marginBottom: 15,
-    },
-
-    iconButton: {
-        padding: 5,
     },
 
     topIconText: {
@@ -32,18 +28,19 @@ export const styles = StyleSheet.create({
     titulo: {
         flexDirection: "row",
         alignItems: "center",
+        marginTop: 15,
     },
 
     text: {
         color: colors.text || "#FFF",
         fontWeight: "bold",
-        fontSize: 22,
+        fontSize: 28,
     },
 
     textHub: {
-        color: colors.primary || "#FFC107",
+        color: "red",
         fontWeight: "bold",
-        fontSize: 22,
+        fontSize: 26,
     },
 
     greetingContainer: {

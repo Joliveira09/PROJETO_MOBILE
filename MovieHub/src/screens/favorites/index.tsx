@@ -38,7 +38,7 @@ export default function Favorites({ navigation }: FavoritesProps) {
       const filmesSalvos = await AsyncStorage.getItem("@filmes_data");
       if (filmesSalvos) {
         const parsed: Movie[] = JSON.parse(filmesSalvos);
-        // Filtra apenas os filmes favoritados
+        
         const apenasFavoritos = parsed.filter((filme) => filme.favorito === true);
         setFavoritos(apenasFavoritos);
       } else {
@@ -81,7 +81,7 @@ export default function Favorites({ navigation }: FavoritesProps) {
           <Text style={styles.tituloHeader}>Favoritos</Text>
         </View>
 
-        {/* Lista de Filmes Curtidos */}
+       
         <FlatList<Movie>
           data={favoritos}
           keyExtractor={(item, index) => (item?.id ? item.id : index.toString())}
@@ -90,7 +90,7 @@ export default function Favorites({ navigation }: FavoritesProps) {
           renderItem={({ item }) => (
             <TouchableOpacity 
               style={styles.card}
-              onPress={() => navigation.navigate("AddMovies", { movie: item })}
+              onPress={() => navigation.navigate("infoMovies", { movie: item })}
             >
               {item.capa ? (
                 <Image source={{ uri: item.capa }} style={styles.capa} />

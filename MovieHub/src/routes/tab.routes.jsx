@@ -12,7 +12,7 @@ import Perfil from '../screens/perfil/index';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-// 1. Stack interno para a aba de Filmes
+
 function MoviesStack() {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>

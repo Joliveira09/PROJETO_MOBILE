@@ -1,10 +1,161 @@
 import { StyleSheet } from "react-native";
-import { colors } from "../../theme/colors";
+
+export const colors = {
+  primary: "#2563eb",
+  background: "#0B0F17",
+  card: "#161B26",
+  text: "#FFFFFF",
+  textSecondary: "#9CA3AF",
+  border: "#1F2937",
+  danger: "#EF4444",
+};
 
 export const styles = StyleSheet.create({
-
-    body: {
-        flex: 1,
-        backgroundColor: colors.background,
-    }
+  container: {
+    flex: 1,
+    backgroundColor: colors.background,
+    paddingTop: 50,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 20,
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  headerTitle: {
+    color: colors.text,
+    fontSize: 22,
+    fontWeight: "bold",
+  },
+  content: {
+    paddingHorizontal: 20,
+    paddingBottom: 40,
+  },
+  profileContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 24,
+  },
+  avatarContainer: {
+    position: "relative",
+    borderWidth: 2,
+    borderColor: colors.primary,
+    borderRadius: 50,
+    padding: 3,
+  },
+  avatar: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: colors.card,
+  },
+  avatarPlaceholder: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  cameraButton: {
+    position: "absolute",
+    bottom: 0,
+    right: 0,
+    backgroundColor: colors.card,
+    borderWidth: 1,
+    borderColor: colors.border,
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  userInfo: {
+    marginLeft: 16,
+    flex: 1,
+  },
+  userName: {
+    color: colors.text,
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  userEmail: {
+    color: colors.textSecondary,
+    fontSize: 14,
+    marginTop: 2,
+  },
+  memberSinceRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 8,
+  },
+  memberSinceText: {
+    color: colors.textSecondary,
+    fontSize: 12,
+    marginLeft: 6,
+  },
+  statsRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 24,
+  },
+  statCard: {
+    backgroundColor: colors.card,
+    width: "23%",
+    paddingVertical: 12,
+    borderRadius: 12,
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  statLabel: {
+    color: colors.textSecondary,
+    fontSize: 10,
+    marginTop: 6,
+    textAlign: "center",
+  },
+  statNumber: {
+    color: colors.text,
+    fontSize: 18,
+    fontWeight: "bold",
+    marginTop: 4,
+  },
+  menuContainer: {
+    backgroundColor: colors.card,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: colors.border,
+    marginBottom: 24,
+  },
+  menuItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingVertical: 16,
+    paddingHorizontal: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+  },
+  menuLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  menuText: {
+    color: colors.text,
+    fontSize: 15,
+    marginLeft: 14,
+  },
+  logoutButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: colors.danger,
+    borderRadius: 12,
+    paddingVertical: 14,
+  },
+  logoutText: {
+    color: colors.danger,
+    fontSize: 15,
+    fontWeight: "600",
+    marginLeft: 8,
+  },
 });
