@@ -1,227 +1,285 @@
 import React, { useState, useCallback } from "react";
 import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  FlatList,
-  Image
+    View,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    FlatList,
+    Image
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
+import { supabase } from "../../services/supabase"; // Ajuste o caminho do seu client supabase
 import { styles } from "./styles";
 
 export interface Movie {
-  id: string;
-  capa?: string | null;
-  titulo: string;
-  genero: string;
-  ano: string;
-  duracao?: string;
-  diretor?: string;
-  descricao?: string;
-  nota: number;
-  status?: string;
-  trailerUrl?: string;
-  favorito?: boolean;
-  dataLancamento: string;
+    id: string; // id_filme mapeado como string/number
+    id_filme: number;
+    capa?: string | null;
+    titulo: string;
+    genero: string;
+    ano: string;
+    duracao?: string;
+    diretor?: string;
+    descricao?: string;
+    nota: number;
+    status?: string;
+    trailerUrl?: string;
+    favorito?: boolean;
+    dataLancamento?: string;
 }
 
 interface MoviesProps {
-  navigation: any;
+    navigation: any;
 }
 
 const CATEGORIAS = ["Todos", "Assistidos", "Quero Assistir", "Assistindo"];
 
 export default function Movies({ navigation }: MoviesProps) {
-  const [busca, setBusca] = useState<string>("");
-  const [categoriaAtiva, setCategoriaAtiva] = useState<string>("Todos");
-  const [todosFilmes, setTodosFilmes] = useState<Movie[]>([]);
-  const [filmesExibidos, setFilmesExibidos] = useState<Movie[]>([]);
+    const [busca, setBusca] = useState<string>("");
+    const [categoriaAtiva, setCategoriaAtiva] = useState<string>("Todos");
+    const [todosFilmes, setTodosFilmes] = useState<Movie[]>([]);
+    const [filmesExibidos, setFilmesExibidos] = useState<Movie[]>([]);
 
-  useFocusEffect(
-    useCallback(() => {
-      carregarFilmes();
-    }, [])
-  );
+    useFocusEffect(
+        useCallback(() => {
+            carregarFilmesDoSupabase();
+        }, [])
+    );
 
-  async function carregarFilmes() {
-    try {
-      const filmesSalvos = await AsyncStorage.getItem("@filmes_data");
-      if (filmesSalvos) {
-        const parsed: Movie[] = JSON.parse(filmesSalvos);
-        setTodosFilmes(parsed);
-        aplicarFiltros(busca, categoriaAtiva, parsed);
-      } else {
-        setTodosFilmes([]);
-        setFilmesExibidos([]);
-      }
-    } catch (error) {
-      console.log("Erro ao carregar filmes:", error);
+    async function carregarFilmesDoSupabase() {
+        try {
+            // Pega o usuário autenticado atual
+            const { data: { user } } = await supabase.auth.getUser();
+            if (!user) return;
+
+            // Busca os filmes do catálogo junto com a relação do usuário (favorito e status)
+            const { data, error } = await supabase
+                .from("filmes")
+                .select(`
+                    id_filme,
+                    titulo,
+                    genero,
+                    ano,
+                    duracao,
+                    diretor,
+                    descrcao,
+                    nota,
+                    trailer,
+                    created_at,
+                    filmes_usuarios (
+                        favorito,
+                        status
+                    )
+                `)
+                .eq("filmes_usuarios.id_usuario", user.id);
+
+            if (error) {
+                console.log("Erro ao buscar filmes:", error.message);
+                return;
+            }
+
+            if (data) {
+                const filmesFormatados: Movie[] = data.map((item: any) => {
+                    const relacao = item.filmes_usuarios?.[0] || {};
+                    return {
+                        id: String(item.id_filme),
+                        id_filme: item.id_filme,
+                        titulo: item.titulo,
+                        genero: item.genero,
+                        ano: String(item.ano),
+                        duracao: item.duracao,
+                        diretor: item.diretor,
+                        descricao: item.descrcao,
+                        nota: Number(item.nota) || 0,
+                        trailerUrl: item.trailer,
+                        capa: null, // Caso queira salvar imagens no Supabase Storage futuramente
+                        favorito: Boolean(relacao.favorito),
+                        status: relacao.status === 'deseja_assistir' ? 'Quero Assistir' : 
+                                relacao.status === 'assistindo' ? 'Assistindo' : 
+                                relacao.status === 'assistido' ? 'Assistido' : 'Quero Assistir',
+                        dataLancamento: item.created_at
+                    };
+                });
+
+                setTodosFilmes(filmesFormatados);
+                aplicarFiltros(busca, categoriaAtiva, filmesFormatados);
+            }
+        } catch (error) {
+            console.log("Erro inesperado:", error);
+        }
     }
-  }
 
-  function aplicarFiltros(texto: string, categoria: string, lista: Movie[]) {
-    let resultado = lista;
+    function aplicarFiltros(texto: string, categoria: string, lista: Movie[]) {
+        let resultado = lista;
 
+        if (categoria !== "Todos") {
+            resultado = resultado.filter((f) => {
+                if (!f.status) return false;
+                const statusFilme = f.status.trim().toLowerCase();
+                const statusCategoria = categoria.trim().toLowerCase();
 
-    if (categoria !== "Todos") {
-      resultado = resultado.filter((f) => {
-        if (!f.status) return false;
-        
-        const statusFilme = f.status.trim().toLowerCase();
-        const statusCategoria = categoria.trim().toLowerCase();
-
-        if (statusCategoria === "assistidos") {
-          return statusFilme === "assistido" || statusFilme === "assistidos";
+                if (statusCategoria === "assistidos" || statusCategoria === "assistido") {
+                    return statusFilme === "assistido" || statusFilme === "assistidos";
+                }
+                return statusFilme === statusCategoria;
+            });
         }
 
-        return statusFilme === statusCategoria;
-      });
-    }
-
-
-    if (texto.trim() !== "") {
-      const termo = texto.toLowerCase();
-      resultado = resultado.filter(
-        (f) =>
-          (f.titulo || "").toLowerCase().includes(termo) ||
-          (f.genero || "").toLowerCase().includes(termo)
-      );
-    }
-
-    setFilmesExibidos(resultado);
-  }
-
-  function handleSearch(texto: string) {
-    setBusca(texto);
-    aplicarFiltros(texto, categoriaAtiva, todosFilmes);
-  }
-
-  function handleSelectCategoria(cat: string) {
-    setCategoriaAtiva(cat);
-    aplicarFiltros(busca, cat, todosFilmes);
-  }
-
-  async function toggleFavorito(id: string) {
-    const atualizados = todosFilmes.map((filme) => {
-      if (filme.id === id) {
-        return { ...filme, favorito: !filme.favorito };
-      }
-      return filme;
-    });
-
-    setTodosFilmes(atualizados);
-    aplicarFiltros(busca, categoriaAtiva, atualizados);
-
-    try {
-      await AsyncStorage.setItem("@filmes_data", JSON.stringify(atualizados));
-    } catch (error) {
-      console.log("Erro ao salvar favorito:", error);
-    }
-  }
-
-  return (
-    <View style={styles.body}>
-      <View style={styles.container}>
-
-        <View style={styles.header}>
-          <Text style={styles.tituloHeader}>Filmes</Text>
-        </View>
-
-
-        <View style={styles.searchRow}>
-          <View style={styles.searchContainer}>
-            <Text style={styles.searchIcon}>🔍</Text>
-            <TextInput
-              style={styles.searchInput}
-              placeholder="Pesquisar filmes..."
-              placeholderTextColor="#777"
-              value={busca}
-              onChangeText={handleSearch}
-            />
-          </View>
-          <TouchableOpacity style={styles.filterButton}>
-            <Text style={styles.filterIcon} onPress = {() => navigation.navigate("Filter")}>Y</Text>
-          </TouchableOpacity>
-        </View>
-
-
-        <View style={styles.tabsContainer}>
-          {CATEGORIAS.map((cat) => {
-            const isActive = categoriaAtiva === cat;
-            return (
-              <TouchableOpacity
-                key={cat}
-                onPress={() => handleSelectCategoria(cat)}
-                style={[styles.tabButton, isActive && styles.tabButtonActive]}
-              >
-                <Text style={[styles.tabText, isActive && styles.tabTextActive]}>
-                  {cat}
-                </Text>
-              </TouchableOpacity>
+        if (texto.trim() !== "") {
+            const termo = texto.toLowerCase();
+            resultado = resultado.filter(
+                (f) =>
+                    (f.titulo || "").toLowerCase().includes(termo) ||
+                    (f.genero || "").toLowerCase().includes(termo)
             );
-          })}
-        </View>
+        }
 
+        setFilmesExibidos(resultado);
+    }
 
-        <FlatList<Movie>
-          data={filmesExibidos}
-          keyExtractor={(item, index) => (item?.id ? item.id : index.toString())}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 30 }}
-          renderItem={({ item }) => (
+    function handleSearch(texto: string) {
+        setBusca(texto);
+        aplicarFiltros(texto, categoriaAtiva, todosFilmes);
+    }
 
+    function handleSelectCategoria(cat: string) {
+        setCategoriaAtiva(cat);
+        aplicarFiltros(busca, cat, todosFilmes);
+    }
 
-            <TouchableOpacity 
-              style={styles.card}
-              onPress={() => navigation.navigate("infoMovies", { movie: item })}
-            >
-              {item.capa ? (
-                <Image source={{ uri: item.capa }} style={styles.capa} />
-              ) : (
-                <View style={[styles.capa, styles.capaPlaceholder]}>
-                  <Text style={{ color: "#777", fontSize: 10 }}>Sem Capa</Text>
+    async function toggleFavorito(idFilme: number, favoritoAtual?: boolean) {
+        try {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (!user) return;
+
+            const novoFavorito = !favoritoAtual;
+
+            // Faz o upsert na tabela de relacionamento do Supabase
+            const { error } = await supabase
+                .from("filmes_usuarios")
+                .upsert({
+                    id_usuario: user.id,
+                    id_filme: idFilme,
+                    favorito: novoFavorito
+                }, { onConflict: 'id_usuario,id_filme' });
+
+            if (error) {
+                console.log("Erro ao atualizar favorito:", error.message);
+                return;
+            }
+
+            const atualizados = todosFilmes.map((filme) => {
+                if (filme.id_filme === idFilme) {
+                    return { ...filme, favorito: novoFavorito };
+                }
+                return filme;
+            });
+
+            setTodosFilmes(atualizados);
+            aplicarFiltros(busca, categoriaAtiva, atualizados);
+        } catch (error) {
+            console.log("Erro ao salvar favorito:", error);
+        }
+    }
+
+    return (
+        <View style={styles.body}>
+            <View style={styles.container}>
+                <View style={styles.header}>
+                    <Text style={styles.tituloHeader}>Filmes</Text>
                 </View>
-              )}
 
-              <View style={styles.info}>
-                <Text style={styles.cardTitulo} numberOfLines={1}>
-                  {item.titulo}
-                </Text>
-                <Text style={styles.cardSubtitulo} numberOfLines={1}>
-                  {item.ano} • {item.genero}
-                </Text>
-                
-                <View style={styles.rowInfo}>
-                  <Text style={styles.cardNota}>★ {item.nota}</Text>
-                  {item.status ? (
-                    <View style={styles.statusBadge}>
-                      <Text style={styles.statusBadgeText}>{item.status}</Text>
+                <View style={styles.searchRow}>
+                    <View style={styles.searchContainer}>
+                        <Text style={styles.searchIcon}>🔍</Text>
+                        <TextInput
+                            style={styles.searchInput}
+                            placeholder="Pesquisar filmes..."
+                            placeholderTextColor="#777"
+                            value={busca}
+                            onChangeText={handleSearch}
+                        />
                     </View>
-                  ) : null}
+                    <TouchableOpacity 
+                        style={styles.filterButton}
+                        onPress={() => navigation.navigate("Filter")}
+                    >
+                        <Text style={styles.filterIcon}>Y</Text>
+                    </TouchableOpacity>
                 </View>
-              </View>
 
-              <TouchableOpacity
-                style={styles.heartButton}
-                onPress={() => toggleFavorito(item.id)}
-              >
-                <Text style={item.favorito ? styles.heartActive : styles.heartInactive}>
-                  {item.favorito ? "♥" : "♡"}
-                </Text>
-              </TouchableOpacity>
-            </TouchableOpacity>
-          )}
-          ListEmptyComponent={() => (
-            <Text style={styles.emptyText}>
-              {busca || categoriaAtiva !== "Todos"
-                ? "Nenhum filme encontrado para este filtro."
-                : "Nenhum filme cadastrado."}
-            </Text>
-          )}
-        />
-      </View>
-    </View>
-  );
+                <View style={styles.tabsContainer}>
+                    {CATEGORIAS.map((cat) => {
+                        const isActive = categoriaAtiva === cat;
+                        return (
+                            <TouchableOpacity
+                                key={cat}
+                                onPress={() => handleSelectCategoria(cat)}
+                                style={[styles.tabButton, isActive && styles.tabButtonActive]}
+                            >
+                                <Text style={[styles.tabText, isActive && styles.tabTextActive]}>
+                                    {cat}
+                                </Text>
+                            </TouchableOpacity>
+                        );
+                    })}
+                </View>
+
+                <FlatList<Movie>
+                    data={filmesExibidos}
+                    keyExtractor={(item) => String(item.id_filme)}
+                    showsVerticalScrollIndicator={false}
+                    contentContainerStyle={{ paddingBottom: 30 }}
+                    renderItem={({ item }) => (
+                        <TouchableOpacity 
+                            style={styles.card}
+                            onPress={() => navigation.navigate("infoMovies", { movie: item })}
+                        >
+                            {item.capa ? (
+                                <Image source={{ uri: item.capa }} style={styles.capa} />
+                            ) : (
+                                <View style={[styles.capa, styles.capaPlaceholder]}>
+                                    <Text style={{ color: "#777", fontSize: 10 }}>Sem Capa</Text>
+                                </View>
+                            )}
+
+                            <View style={styles.info}>
+                                <Text style={styles.cardTitulo} numberOfLines={1}>
+                                    {item.titulo}
+                                </Text>
+                                <Text style={styles.cardSubtitulo} numberOfLines={1}>
+                                    - {item.ano} {item.genero}
+                                </Text>
+                                
+                                <View style={styles.rowInfo}>
+                                    <Text style={styles.cardNota}>★ {item.nota}</Text>
+                                    {item.status ? (
+                                        <View style={styles.statusBadge}>
+                                            <Text style={styles.statusBadgeText}>{item.status}</Text>
+                                        </View>
+                                    ) : null}
+                                </View>
+                            </View>
+
+                            <TouchableOpacity
+                                style={styles.heartButton}
+                                onPress={() => toggleFavorito(item.id_filme, item.favorito)}
+                            >
+                                <Text style={item.favorito ? styles.heartActive : styles.heartInactive}>
+                                    {item.favorito ? "♥" : "♡"}
+                                </Text>
+                            </TouchableOpacity>
+                        </TouchableOpacity>
+                    )}
+                    ListEmptyComponent={() => (
+                        <Text style={styles.emptyText}>
+                            {busca || categoriaAtiva !== "Todos"
+                                ? "Nenhum filme encontrado para este filtro."
+                                : "Nenhum filme cadastrado."}
+                        </Text>
+                    )}
+                />
+            </View>
+        </View>
+    );
 }

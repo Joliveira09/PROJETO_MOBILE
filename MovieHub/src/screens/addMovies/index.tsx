@@ -6,15 +6,15 @@ import {
     TouchableOpacity, 
     ScrollView, 
     Image, 
-    Alert 
+    Alert,
+    ActivityIndicator
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { supabase } from "../../services/supabase"; // Ajuste o caminho se necessário
 import { styles } from "./styles";
 
-export default function Movies({ navigation }) {
-
-    const [capa, setCapa] = useState(null);
+export default function AddMovies({ navigation }: any) {
+    const [capa, setCapa] = useState<string | null>(null);
     const [titulo, setTitulo] = useState("");
     const [genero, setGenero] = useState("");
     const [ano, setAno] = useState("");
@@ -24,7 +24,7 @@ export default function Movies({ navigation }) {
     const [nota, setNota] = useState(0);
     const [status, setStatus] = useState("Assistido");
     const [trailerUrl, setTrailerUrl] = useState("");
-
+    const [loading, setLoading] = useState(false);
 
     async function escolherDaGaleria() {
         const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -45,7 +45,6 @@ export default function Movies({ navigation }) {
         }
     }
 
-
     async function tirarFoto() {
         const permission = await ImagePicker.requestCameraPermissionsAsync();
         if (!permission.granted) {
@@ -64,40 +63,79 @@ export default function Movies({ navigation }) {
         }
     }
 
-
     async function salvarFilme() {
         if (!titulo || !genero || !ano) {
             Alert.alert("Atenção", "Preencha ao menos o Título, Gênero e Ano.");
             return;
         }
 
-        const novoFilme = {
-            id: String(Date.now()),
-            capa,
-            titulo,
-            genero,
-            ano,
-            duracao,
-            diretor,
-            descricao,
-            nota,
-            status,
-            trailerUrl,
-            dataLancamento: new Date().toISOString()
-        };
+        setLoading(true);
 
         try {
-            const filmesSalvos = await AsyncStorage.getItem("@filmes_data");
-            const listaFilmes = filmesSalvos ? JSON.parse(filmesSalvos) : [];
+            // 1. Obtém o utilizador autenticado
+            const { data: { user } } = await supabase.auth.getUser();
+            if (!user) {
+                Alert.alert("Erro", "Você precisa estar logado para cadastrar um filme.");
+                setLoading(false);
+                return;
+            }
 
-            listaFilmes.push(novoFilme);
+            console.log("Inserindo filme para o ID:", user.id);
 
-            await AsyncStorage.setItem("@filmes_data", JSON.stringify(listaFilmes));
+            // 2. Insere o filme na tabela 'filmes'
+            const { data: filmeData, error: filmeError } = await supabase
+                .from("filmes")
+                .insert([
+                    {
+                        titulo: titulo.trim(),
+                        genero: genero.trim(),
+                        ano: parseInt(ano, 10),
+                        duracao: duracao.trim(),
+                        diretor: diretor.trim(),
+                        descricao: descricao.trim(), // Corrigido para corresponder à coluna da base de dados
+                        nota: Number(nota),
+                        trailer: trailerUrl.trim()
+                    }
+                ])
+                .select("id_filme")
+                .single();
 
-            Alert.alert("Sucesso", "Filme cadastrado com sucesso!");
-            navigation.goBack();
-        } catch (error) {
-            Alert.alert("Erro", "Não foi possível salvar o filme.");
+            if (filmeError) {
+                console.log("ERRO SUPABASE (filmes):", JSON.stringify(filmeError, null, 2));
+                Alert.alert("Erro ao salvar filme", filmeError.message);
+                setLoading(false);
+                return;
+            }
+
+            // 3. Mapeia o status para o formato aceito no banco
+            const statusBanco = status === "Assistindo" ? "assistindo" : 
+                                status === "Quero Assistir" ? "deseja_assistir" : "assistido";
+
+            // 4. Cria a relação do filme com o utilizador
+            const { error: relacaoError } = await supabase
+                .from("filmes_usuarios")
+                .insert([
+                    {
+                        id_usuario: user.id,
+                        id_filme: filmeData.id_filme,
+                        favorito: false,
+                        status: statusBanco
+                    }
+                ]);
+
+            if (relacaoError) {
+                console.log("ERRO SUPABASE (filmes_usuarios):", JSON.stringify(relacaoError, null, 2));
+                Alert.alert("Aviso", "Filme criado, mas ocorreu um erro ao vincular ao seu perfil: " + relacaoError.message);
+            } else {
+                Alert.alert("Sucesso", "Filme cadastrado com sucesso!");
+                navigation.goBack();
+            }
+
+        } catch (error: any) {
+            console.log("Erro inesperado:", error);
+            Alert.alert("Erro", "Ocorreu um erro inesperado ao salvar o filme.");
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -130,7 +168,6 @@ export default function Movies({ navigation }) {
                         </TouchableOpacity>
                     </View>
 
-
                     <Text style={styles.label}>Título *</Text>
                     <TextInput
                         style={styles.input}
@@ -139,7 +176,6 @@ export default function Movies({ navigation }) {
                         value={titulo}
                         onChangeText={setTitulo}
                     />
-
 
                     <Text style={styles.label}>Gênero *</Text>
                     <TextInput
@@ -175,7 +211,6 @@ export default function Movies({ navigation }) {
                         </View>
                     </View>
 
-
                     <Text style={styles.label}>Diretor</Text>
                     <TextInput
                         style={styles.input}
@@ -195,6 +230,7 @@ export default function Movies({ navigation }) {
                         value={descricao}
                         onChangeText={setDescricao}
                     />
+
                     <Text style={styles.label}>Nota: {nota} / 5</Text>
                     <View style={styles.starsContainer}>
                         {[1, 2, 3, 4, 5].map((star) => (
@@ -205,7 +241,6 @@ export default function Movies({ navigation }) {
                             </TouchableOpacity>
                         ))}
                     </View>
-
 
                     <Text style={styles.label}>Status</Text>
                     <View style={styles.statusContainer}>
@@ -225,7 +260,6 @@ export default function Movies({ navigation }) {
                         ))}
                     </View>
 
-
                     <Text style={styles.label}>Link do Trailer (YouTube)</Text>
                     <TextInput
                         style={styles.input}
@@ -237,10 +271,13 @@ export default function Movies({ navigation }) {
                         onChangeText={setTrailerUrl}
                     />
 
-
                     <View style={styles.actionButtonsContainer}>
-                        <TouchableOpacity style={styles.saveButton} onPress={salvarFilme}>
-                            <Text style={styles.saveButtonText}>Salvar Filme</Text>
+                        <TouchableOpacity style={styles.saveButton} onPress={salvarFilme} disabled={loading}>
+                            {loading ? (
+                                <ActivityIndicator color="#FFF" />
+                            ) : (
+                                <Text style={styles.saveButtonText}>Salvar Filme</Text>
+                            )}
                         </TouchableOpacity>
 
                         <TouchableOpacity style={styles.cancelButton} onPress={() => navigation.goBack()}>

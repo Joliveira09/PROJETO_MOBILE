@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Alert, Image } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { View, Text, TextInput, TouchableOpacity, Alert, Image, ActivityIndicator } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import { supabase } from "../../services/supabase";
 import { colors } from "../../theme/colors";
 import { styles } from "./styles";
 
@@ -11,6 +11,7 @@ export default function Cadastro({ navigation }: any) {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [confirmarSenha, setConfirmarSenha] = useState("");
+    const [loading, setLoading] = useState(false);
 
     async function handleSelecionarFoto() {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -38,8 +39,8 @@ export default function Cadastro({ navigation }: any) {
             return;
         }
 
-        if (senha.length < 8) {
-            Alert.alert("Atenção", "A senha deve ter no mínimo 8 caracteres.");
+        if (senha.length < 6) {
+            Alert.alert("Atenção", "A senha deve ter no mínimo 6 caracteres para o Supabase.");
             return;
         }
 
@@ -48,15 +49,38 @@ export default function Cadastro({ navigation }: any) {
             return;
         }
 
-        try {
-            const novoUsuario = { foto, nome, email, senha };
-            await AsyncStorage.setItem("@user_data", JSON.stringify(novoUsuario));
+        setLoading(true);
 
-            Alert.alert("Sucesso", "Cadastro realizado com sucesso!", [
-                { text: "OK", onPress: () => navigation.navigate("Login") }
-            ]);
+        try {
+            const emailLimpo = email.trim().toLowerCase();
+
+            const { data, error } = await supabase.auth.signUp({
+                email: emailLimpo,
+                password: senha,
+                options: {
+                    data: {
+                        full_name: nome,
+                    }
+                }
+            });
+
+            if (error) {
+                console.log("Erro detalhado do Supabase:", error);
+                Alert.alert("Erro ao criar conta", error.message);
+                setLoading(false);
+                return;
+            }
+
+            if (data.user) {
+                Alert.alert("Sucesso", "Cadastro realizado com sucesso!", [
+                    { text: "OK", onPress: () => navigation.navigate("Login") }
+                ]);
+            }
         } catch (error) {
+            console.log("Erro catch:", error);
             Alert.alert("Erro", "Ocorreu um erro ao realizar o cadastro.");
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -67,7 +91,6 @@ export default function Cadastro({ navigation }: any) {
                     <Text style={styles.text}>Criar Conta</Text>
                     <Text style={styles.subtitulo}>Preencha os dados abaixo</Text>
                 </View>
-
 
                 <View style={styles.avatarContainer}>
                     <TouchableOpacity style={styles.avatarCircle} onPress={handleSelecionarFoto}>
@@ -114,7 +137,7 @@ export default function Cadastro({ navigation }: any) {
                         <Text style={styles.info}>Senha</Text>
                         <TextInput
                             style={styles.input}
-                            placeholder="Mínimo 8 caracteres"
+                            placeholder="Mínimo 6 caracteres"
                             placeholderTextColor={colors.textSecondary}
                             value={senha}
                             onChangeText={setSenha}
@@ -135,8 +158,12 @@ export default function Cadastro({ navigation }: any) {
                     </View>
 
                     <View style={styles.cadastrar}>
-                        <TouchableOpacity style={styles.button} onPress={handleCadastrar}>
-                            <Text style={styles.textButton}>Cadastrar</Text>
+                        <TouchableOpacity style={styles.button} onPress={handleCadastrar} disabled={loading}>
+                            {loading ? (
+                                <ActivityIndicator color="#FFF" />
+                            ) : (
+                                <Text style={styles.textButton}>Cadastrar</Text>
+                            )}
                         </TouchableOpacity>
                     </View>
 

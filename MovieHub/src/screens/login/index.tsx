@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { View, Text, Image, TextInput, Pressable, TouchableOpacity, Alert } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { View, Text, Image, TextInput, Pressable, TouchableOpacity, Alert, ActivityIndicator } from "react-native";
+import { supabase } from "../../services/supabase"; // Ajuste o caminho do seu arquivo supabase
 import { colors } from "../../theme/colors";
 import { styles } from "./styles";
 
-export default function Login({ navigation }) {
+export default function Login({ navigation }: any) {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [marcado, setMarcado] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     async function entrar() {
         if (!email || !senha) {
@@ -15,27 +16,28 @@ export default function Login({ navigation }) {
             return;
         }
 
-        try {
-            const userData = await AsyncStorage.getItem("@user_data");
+        setLoading(true);
 
-            if (!userData) {
-                Alert.alert("Erro", "Usuário não encontrado.");
+        try {
+            // Autenticação nativa do Supabase
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: email.trim(),
+                password: senha,
+            });
+
+            if (error) {
+                Alert.alert("Erro de Autenticação", error.message);
+                setLoading(false);
                 return;
             }
 
-            const user = JSON.parse(userData);
-
-            if (user.email === email && user.senha === senha) {
-                if (marcado) {
-                    await AsyncStorage.setItem("@user_logged", "true");
-                }
-
+            if (data.user) {
                 navigation.navigate("Home");
-            } else {
-                Alert.alert("Erro", "E-mail ou senha incorretos.");
             }
         } catch (error) {
             Alert.alert("Erro", "Ocorreu um erro ao tentar fazer login.");
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -93,13 +95,15 @@ export default function Login({ navigation }) {
                     </Pressable>
 
                     <View style={styles.logar}>
-
-                        <TouchableOpacity style={styles.button} onPress={entrar}>
-                            <Text style={styles.textButton}>Entrar</Text>
+                        <TouchableOpacity style={styles.button} onPress={entrar} disabled={loading}>
+                            {loading ? (
+                                <ActivityIndicator color="#FFF" />
+                            ) : (
+                                <Text style={styles.textButton}>Entrar</Text>
+                            )}
                         </TouchableOpacity>
 
                         <View style={styles.cadastrar}>
-
                             <Text style={styles.cadastrarText}>Ainda não tem conta? </Text>
                             <TouchableOpacity onPress={() => navigation.navigate("Cadastro")}>
                                 <Text style={[styles.cadastrarText, { color: colors.primary }]}>
